@@ -1,0 +1,5 @@
+seaborn
+altair
+plotly
+pycountry
+geopandas
