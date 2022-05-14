@@ -239,11 +239,8 @@ with st.echo(code_location='below'):
         
         result = pd.merge(world, country_map_df, on = "iso_a3")
         fig = px.choropleth(result, locations='iso_a3', color='suicide_rate',
-                            color_continuous_scale="Inferno",
+                            color_continuous_scale="ylorbr",
                             range_color=(0, 0.04),
-                            #    mapbox_style="carto-positron",
-                            #    zoom=3, center = {"lat": 37.0902, "lon": -95.7129},
-                            #    opacity=0.5,
                             labels={'iso_a3':'Код ISO', 'name_y': 'Название', 'suicide_rate': 'Самоубийств'}
                             )
         fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
@@ -277,3 +274,10 @@ with st.echo(code_location='below'):
         ### ENDFROM
         fig.update_layout(showlegend=False)
         st.plotly_chart(fig, use_container_width=True)
+
+
+
+
+
+
+
