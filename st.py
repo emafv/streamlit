@@ -214,6 +214,7 @@ with st.echo(code_location='below'):
         country_dict = dict()
         for index, row in aggregated_data.iterrows():
             try:
+                year = row['year']
                 name = row['country']
                 rate = row['suicides_by_100k']
                 iso_code = countries[name]
@@ -257,29 +258,22 @@ with st.echo(code_location='below'):
         targets = {'Количество самоубийств': "n_suicides", "Количество самоубийств на 100 тыс": "suicides_by_100k"}
         target_description = col2.radio("Цель", list(targets.keys()))
         target = targets[target_description]
-        # fig_next = plt.figure(figsize=(10, 4))
-
+        
         # источник: https://plotly.com/python/multiple-axes/
         country_data = aggregated_data[aggregated_data['country'] == country]
-        # Create figure with secondary y-axis
+        ### FROM: https://plotly.com/python/multiple-axes/
         fig = make_subplots(specs=[[{"secondary_y": True}]])
-
-        # Add traces
         fig.add_trace(
             go.Scatter(x=country_data['year'], y=country_data[target]),
             secondary_y=False, 
         )
-
         fig.add_trace(
             go.Scatter(x=country_data['year'], y=country_data['gdp_per_capita']),
             secondary_y=True,
         )
-
-        # Set x-axis title
         fig.update_xaxes(title_text="Год")
-
-        # Set y-axes titles
         fig.update_yaxes(title_text=f"<b>{target_description}</b>", secondary_y=False, color='#636EFA')
         fig.update_yaxes(title_text="<b>ВВП</b> на душу населения", secondary_y=True, color='#EF553B')
+        ### ENDFROM
         fig.update_layout(showlegend=False)
         st.plotly_chart(fig, use_container_width=True)
